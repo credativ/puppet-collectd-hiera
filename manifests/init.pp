@@ -7,22 +7,27 @@ class collectd {
         group   => root,
         mode    => 0644,
         content => template("collectd/plugin.conf.erb"),
-        notify  => Service['ssh']
+        notify  => Service['collectd']
     }
   }
-  package {
-    collectd: ensure => installed;
+  package { 'libgcrypt11':
+	  ensure  => $ensure,
+  }
+
+  package { 'collectd': 
+		ensure => installed,
+		require => Package['libgcrypt11']
   }
 
   file {
     "/etc/collectd/collectd.conf":
       content => template("collectd/etc/collectd/collectd.conf.erb"),
-      notify  => Exec["collectd restart"];
+      notify  => Service['collectd'];
 
     "/etc/collectd/collectd.d/":
       ensure  => directory,
       purge   => true,
-      notify  => Service['ssh']
+      notify  => Service['collectd'];
   }
 
   service { 'collectd':
@@ -32,8 +37,6 @@ class collectd {
 	hasstatus   => true,
 	require     => Package['collectd']
   }
-
-  $server = params_lookup('osf_mng_server_ip')
 
   #load standardplugins
   plugin { 'contextswitch': }
@@ -48,9 +51,4 @@ class collectd {
   plugin { 'processes': }
   plugin { 'swap': }
   plugin { 'users': }
-  plugin { 'network':
-    options => 'Server ${server}'
-  }
-
-
 }
