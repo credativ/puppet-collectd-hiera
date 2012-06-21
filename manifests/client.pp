@@ -1,5 +1,9 @@
 class collectd::client inherits collectd {
-	#@collectd::plugin { 'network':
-	#	options => 'Server "10.0.3.1"'
-	#}
+	$server = params_lookup('osf_mng_server_ip', 'global')
+
+	notify{"The value is: ${server}": }
+
+	plugin { 'network':
+		options => "\tServer \"${server}\""
+	}
 }
