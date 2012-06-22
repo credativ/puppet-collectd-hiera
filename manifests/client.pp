@@ -1,7 +1,23 @@
-class collectd::client inherits collectd {
-    $server = params_lookup('osf_mng_server_ip', 'global')
+class collectd::client (
+        $ensure         = params_lookup('ensure'),
+        $ensure_running = params_lookup('ensure_running'),
+        $ensure_enabled = params_lookup('ensure_enabled'),
+        $server         = params_lookup('server'),
+    ) inherits collectd {
 
     plugin { 'network':
         options => "\tServer \"${server}\""
+    }
+
+    Service <| title == 'collectd' |> {
+        ensure          => $ensure_running,
+        enable          => $ensure_enabled,
+    }
+    
+    if $::hostname in $disabled_hosts {
+        Service <| title == 'collected' |> {
+            enable => false,
+            ensure => 'stopped'
+        } 
     }
 }
