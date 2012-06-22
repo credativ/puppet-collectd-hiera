@@ -11,7 +11,7 @@ class collectd::server (
     }
     
     if $::hostname in $disabled_hosts {
-        Service <| title == 'collected' |> {
+        Service <| title == 'collectd' |> {
             enable => false,
             ensure => 'stopped'
         } 
