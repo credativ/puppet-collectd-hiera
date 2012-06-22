@@ -1,4 +1,6 @@
-class collectd {
+class collectd (
+  ) inherits collectd::params {
+
   define plugin ($options="") {
     file {
       "/etc/collectd/collectd.d/${name}.conf":

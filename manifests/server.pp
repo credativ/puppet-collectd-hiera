@@ -1,8 +1,12 @@
-class collectd::server inherits collectd {
-    $listenip = params_lookup('osf_mng_server_ip', 'global')
+class collectd::server (
+        $ensure         = params_lookup('ensure'),
+        $ensure_running = params_lookup('ensure_running'),
+        $ensure_enabled = params_lookup('ensure_enabled'),
+        $listener       = params_lookup('listener'),
+    ) inherits collectd {
 
     plugin { 'network':
-        options => "\tListen \"${listenip}\" \"25826\""
+        options => "\tListen \"${listener}\" \"25826\""
     }
 
     plugin { 'rrdtool':
@@ -15,7 +19,7 @@ class collectd::server inherits collectd {
 
     package { 'collectd-web':
         ensure => installed,
-            require => Package['collectd']
+        require => Package['collectd']
     }
 
 }
