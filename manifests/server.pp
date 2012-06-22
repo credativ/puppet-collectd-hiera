@@ -5,6 +5,19 @@ class collectd::server (
         $listener       = params_lookup('listener'),
     ) inherits collectd {
 
+    Service <| title == 'collectd' |> {
+        ensure          => $ensure_running,
+        enable          => $ensure_enabled,
+    }
+    
+    if $::hostname in $disabled_hosts {
+        Service <| title == 'collected' |> {
+            enable => false,
+            ensure => 'stopped'
+        } 
+    }
+
+         
     plugin { 'network':
         options => "\tListen \"${listener}\" \"25826\""
     }

@@ -1,4 +1,5 @@
 class collectd (
+    $disabled_hosts = params_lookup('disabled_hosts')
   ) inherits collectd::params {
 
   define plugin ($options="") {
@@ -53,4 +54,5 @@ class collectd (
   plugin { 'processes': }
   plugin { 'swap': }
   plugin { 'users': }
+
 }
