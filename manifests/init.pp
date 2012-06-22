@@ -11,12 +11,12 @@ class collectd {
     }
   }
   package { 'libgcrypt11':
-	  ensure  => $ensure,
+      ensure  => $ensure,
   }
 
   package { 'collectd': 
-		ensure => installed,
-		require => Package['libgcrypt11']
+        ensure => installed,
+        require => Package['libgcrypt11']
   }
 
   file {
@@ -31,11 +31,11 @@ class collectd {
   }
 
   service { 'collectd':
-  	ensure      => $ensure_running,
-	enable      => $ensure_enabled,
-	hasrestart  => true,
-	hasstatus   => true,
-	require     => Package['collectd']
+    ensure      => $ensure_running,
+    enable      => $ensure_enabled,
+    hasrestart  => true,
+    hasstatus   => true,
+    require     => Package['collectd']
   }
 
   #load standardplugins
