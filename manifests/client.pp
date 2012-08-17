@@ -39,7 +39,7 @@ class collectd (
     $ensure_enabled     = params_lookup('ensure_enabled'),
     $config_source      = params_lookup('config_source'),
     $config_template    = params_lookup('config_template'),
-    $disabled_hosts     = params_lookup('disabled_hosts')
+    $disabled_hosts     = params_lookup('disabled_hosts'),
     $server             = params_lookup('server'),
     ) inherits collectd::params {
 
