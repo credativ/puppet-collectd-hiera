@@ -32,7 +32,7 @@
 # == Author:
 #
 #   Patrick Schoenfeld <patrick.schoenfeld@credativ.de>
-class collectd (
+class collectd::client (
     $ensure             = params_lookup('ensure'),
     $manage_config      = params_lookup('manage_config'),
     $ensure_running     = params_lookup('ensure_running'),
