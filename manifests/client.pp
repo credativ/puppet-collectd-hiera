@@ -41,7 +41,7 @@ class collectd::client (
     $config_template    = params_lookup('config_template'),
     $disabled_hosts     = params_lookup('disabled_hosts'),
     $server             = params_lookup('server'),
-    ) inherits collectd::params {
+    ) inherits collectd {
 
     plugin { 'network':
         options => "\tServer \"${server}\""
